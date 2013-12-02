@@ -84,7 +84,7 @@
     </Reference>
     <Reference Include="x-IMU API, Version=13.3.4763.4672, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\x-IMU API\bin\Release\x-IMU API.dll</HintPath>
+      <HintPath>..\..\x-IMU API\bin\Debug\x-IMU API.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

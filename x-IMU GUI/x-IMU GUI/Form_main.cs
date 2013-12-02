@@ -84,6 +84,17 @@ namespace x_IMU_GUI
         /// </summary>
         private x_IMU_API.CSVfileWriter hardIronCalCSVfileWriter;
 
+        /// <summary>
+        /// Delegate used for cross thread invokation of Form Dashboard controls
+        /// </summary>
+        /// <param name="data"></param>
+        delegate void updateDashboardDelagate (x_IMU_API.CalInertialAndMagneticData data);
+        /// <summary>
+        /// updateDashboardDelegate declaration
+        /// </summary>
+        private updateDashboardDelagate updateDashboard;
+
+        private float maxX, maxY, maxZ;
         #endregion
 
         /// <summary>
@@ -107,10 +118,10 @@ namespace x_IMU_GUI
             // Create peripheral GUIs and assign to ShowHideButton
             batteryOscilloscope = new SimpleOscilloscope("Battery Data (V)", "Oscilloscope/batteryOscilloscope_settings.ini");
             showHideButton_batteryGraph.Object = batteryOscilloscope;
-            thermometerOscilloscope = new SimpleOscilloscope("Thermometer Data (°C)", "Oscilloscope/thermometerOscilloscope_settings.ini");
-            showHideButton_thermometerGraph.Object = thermometerOscilloscope;
             gyroscopeOscilloscope = new SimpleOscilloscope("Gyroscope Data (°/s)", "Oscilloscope/gyroscopeOscilloscope_settings.ini");
             showHideButton_gyroscopeGraph.Object = gyroscopeOscilloscope;
+            thermometerOscilloscope = new SimpleOscilloscope("Thermometer Data (°C)", "Oscilloscope/thermometerOscilloscope_settings.ini");
+            showHideButton_thermometerGraph.Object = thermometerOscilloscope;
             accelerometerOscilloscope = new SimpleOscilloscope("Accelerometer Data (g)", "Oscilloscope/accelerometerOscilloscope_settings.ini");
             showHideButton_accelerometerGraph.Object = accelerometerOscilloscope;
             magnetometerOscilloscope = new SimpleOscilloscope("Magnetometer Data (Gauss)", "Oscilloscope/magnetometerOscilloscope_settings.ini");
@@ -195,6 +206,14 @@ namespace x_IMU_GUI
             formUpdateTimer.Interval = 50;
             formUpdateTimer.Tick += new EventHandler(formUpdateTimer_Tick);
             formUpdateTimer.Start();
+
+            //Add method delagate called during to Dashboard control invoke
+            this.updateDashboard += updateDashboard_rawInertialAndMagnaetic;
+            
+            //assign other variables
+            this.maxX = 0;
+            this.maxY = 0;
+            this.maxZ = 0;
 
             // Auto connect on start up
             toggleButton_openClosePort.PerformClick();
@@ -772,6 +791,7 @@ namespace x_IMU_GUI
             gyroscopeOscilloscope.AddScopeData(e.Gyroscope[0], e.Gyroscope[1], e.Gyroscope[2]);
             accelerometerOscilloscope.AddScopeData(e.Accelerometer[0], e.Accelerometer[1], e.Accelerometer[2]);
             magnetometerOscilloscope.AddScopeData(e.Magnetometer[0], e.Magnetometer[1], e.Magnetometer[2]);
+            if (this.toggleButton_dashboardCapture.ToggleState) this.Invoke(updateDashboard, e);
         }
 
         /// <summary>
@@ -1377,6 +1397,51 @@ namespace x_IMU_GUI
             {
                 MessageBox.Show("Browser launch failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        #endregion
+
+        #region Dashboard
+
+        private void toggleButton_dashboardCapture_Click(object sender, EventArgs e)
+        {
+            if ((sender as ToggleButton).ToggleState)
+            {
+                this.toggleButton_dashboardCapture.BackColor = Color.Red;
+                this.toggleButton_dashboardCapture.ForeColor = Color.White;
+            }
+            else
+            {
+                this.toggleButton_dashboardCapture.BackColor = Color.GreenYellow;
+                this.toggleButton_dashboardCapture.ForeColor = Color.Black;
+            }
+        }
+        
+        public void updateDashboard_rawInertialAndMagnaetic(x_IMU_API.CalInertialAndMagneticData data)
+        {
+            this.label_currentXValue.Text = data.Accelerometer[0].ToString();
+            this.label_currentYValue.Text = data.Accelerometer[1].ToString();
+            this.label_currentZValue.Text = data.Accelerometer[2].ToString();
+
+            if (data.Accelerometer[0] > this.maxX)
+            {
+                this.maxX = data.Accelerometer[0];
+                this.label_maxXValue.Text = this.maxX.ToString();
+            }
+            if (data.Accelerometer[1] > this.maxY)
+            {
+                this.maxY = data.Accelerometer[1];
+                this.label_maxYValue.Text = this.maxY.ToString();
+            }
+            if (data.Accelerometer[2] > this.maxZ)
+            {
+                this.maxZ = data.Accelerometer[2];
+                this.label_maxZValue.Text = this.maxZ.ToString();
+            }
+        }
+
+        private void updatDashboard_rawBatteryAndThermal(x_IMU_API.RawBatteryAndThermometerData data)
+        {
         }
 
         #endregion
