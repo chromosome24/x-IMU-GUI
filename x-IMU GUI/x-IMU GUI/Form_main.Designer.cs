@@ -159,18 +159,34 @@
             this.label_GUIversion = new System.Windows.Forms.Label();
             this.tabPage_dashBoard = new System.Windows.Forms.TabPage();
             this.toggleButton_dashboardCapture = new x_IMU_GUI.ToggleButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label_maxRotation = new System.Windows.Forms.Label();
+            this.label_currentRotation = new System.Windows.Forms.Label();
+            this.label_zRotation = new System.Windows.Forms.Label();
+            this.label_yRotation = new System.Windows.Forms.Label();
+            this.label_maxZRotationValue = new System.Windows.Forms.Label();
+            this.label_currentZRotationValue = new System.Windows.Forms.Label();
+            this.label_maxYRotationValue = new System.Windows.Forms.Label();
+            this.label_currentYRotationValue = new System.Windows.Forms.Label();
+            this.label_maxXRotationValue = new System.Windows.Forms.Label();
+            this.label_currentXRotationValue = new System.Windows.Forms.Label();
+            this.label_xRotation = new System.Windows.Forms.Label();
             this.groupBox_acceleration = new System.Windows.Forms.GroupBox();
             this.label_maxAcceleration = new System.Windows.Forms.Label();
             this.label_currentAcceleration = new System.Windows.Forms.Label();
-            this.label_z = new System.Windows.Forms.Label();
-            this.label_y = new System.Windows.Forms.Label();
-            this.label_maxZValue = new System.Windows.Forms.Label();
-            this.label_currentZValue = new System.Windows.Forms.Label();
-            this.label_maxYValue = new System.Windows.Forms.Label();
-            this.label_currentYValue = new System.Windows.Forms.Label();
-            this.label_maxXValue = new System.Windows.Forms.Label();
-            this.label_currentXValue = new System.Windows.Forms.Label();
-            this.label_x = new System.Windows.Forms.Label();
+            this.label_zAcceleration = new System.Windows.Forms.Label();
+            this.label_yAcceleration = new System.Windows.Forms.Label();
+            this.label_maxZAccelerationValue = new System.Windows.Forms.Label();
+            this.label_currentZAccelerationValue = new System.Windows.Forms.Label();
+            this.label_maxYAccelerationValue = new System.Windows.Forms.Label();
+            this.label_currentYAccelerationValue = new System.Windows.Forms.Label();
+            this.label_maxXAccelerationValue = new System.Windows.Forms.Label();
+            this.label_currentXAccelerationValue = new System.Windows.Forms.Label();
+            this.label_xAceleration = new System.Windows.Forms.Label();
+            this.progressBar_battery = new System.Windows.Forms.ProgressBar();
+            this.progressBar_temperature = new System.Windows.Forms.ProgressBar();
+            this.label_temerature = new System.Windows.Forms.Label();
+            this.label_battery = new System.Windows.Forms.Label();
             this.tabControl_main.SuspendLayout();
             this.tabPage_serialPort.SuspendLayout();
             this.groupBox_packetCounters.SuspendLayout();
@@ -207,6 +223,7 @@
             this.tabPage_about.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_logo)).BeginInit();
             this.tabPage_dashBoard.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox_acceleration.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1701,7 +1718,12 @@
             // 
             // tabPage_dashBoard
             // 
+            this.tabPage_dashBoard.Controls.Add(this.label_battery);
+            this.tabPage_dashBoard.Controls.Add(this.label_temerature);
+            this.tabPage_dashBoard.Controls.Add(this.progressBar_temperature);
+            this.tabPage_dashBoard.Controls.Add(this.progressBar_battery);
             this.tabPage_dashBoard.Controls.Add(this.toggleButton_dashboardCapture);
+            this.tabPage_dashBoard.Controls.Add(this.groupBox1);
             this.tabPage_dashBoard.Controls.Add(this.groupBox_acceleration);
             this.tabPage_dashBoard.Location = new System.Drawing.Point(4, 22);
             this.tabPage_dashBoard.Name = "tabPage_dashBoard";
@@ -1714,7 +1736,7 @@
             // toggleButton_dashboardCapture
             // 
             this.toggleButton_dashboardCapture.BackColor = System.Drawing.Color.GreenYellow;
-            this.toggleButton_dashboardCapture.FalsePrefixText = "FalsePrefixText";
+            this.toggleButton_dashboardCapture.FalsePrefixText = "Start ";
             this.toggleButton_dashboardCapture.Location = new System.Drawing.Point(30, 316);
             this.toggleButton_dashboardCapture.Name = "toggleButton_dashboardCapture";
             this.toggleButton_dashboardCapture.Size = new System.Drawing.Size(130, 23);
@@ -1723,26 +1745,147 @@
             this.toggleButton_dashboardCapture.Text = "Start Data Capture";
             this.toggleButton_dashboardCapture.ToggleState = false;
             this.toggleButton_dashboardCapture.TruePrefixText = "Stop ";
-            this.toggleButton_dashboardCapture.FalsePrefixText = "Start ";
             this.toggleButton_dashboardCapture.UseVisualStyleBackColor = false;
             this.toggleButton_dashboardCapture.Click += new System.EventHandler(this.toggleButton_dashboardCapture_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label_maxRotation);
+            this.groupBox1.Controls.Add(this.label_currentRotation);
+            this.groupBox1.Controls.Add(this.label_zRotation);
+            this.groupBox1.Controls.Add(this.label_yRotation);
+            this.groupBox1.Controls.Add(this.label_maxZRotationValue);
+            this.groupBox1.Controls.Add(this.label_currentZRotationValue);
+            this.groupBox1.Controls.Add(this.label_maxYRotationValue);
+            this.groupBox1.Controls.Add(this.label_currentYRotationValue);
+            this.groupBox1.Controls.Add(this.label_maxXRotationValue);
+            this.groupBox1.Controls.Add(this.label_currentXRotationValue);
+            this.groupBox1.Controls.Add(this.label_xRotation);
+            this.groupBox1.Location = new System.Drawing.Point(30, 160);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(266, 111);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "ROTATION";
+            // 
+            // label_maxRotation
+            // 
+            this.label_maxRotation.AutoSize = true;
+            this.label_maxRotation.Location = new System.Drawing.Point(89, 26);
+            this.label_maxRotation.Name = "label_maxRotation";
+            this.label_maxRotation.Size = new System.Drawing.Size(27, 13);
+            this.label_maxRotation.TabIndex = 0;
+            this.label_maxRotation.Text = "Max";
+            // 
+            // label_currentRotation
+            // 
+            this.label_currentRotation.AutoSize = true;
+            this.label_currentRotation.Location = new System.Drawing.Point(186, 26);
+            this.label_currentRotation.Name = "label_currentRotation";
+            this.label_currentRotation.Size = new System.Drawing.Size(41, 13);
+            this.label_currentRotation.TabIndex = 0;
+            this.label_currentRotation.Text = "Current";
+            // 
+            // label_zRotation
+            // 
+            this.label_zRotation.AutoSize = true;
+            this.label_zRotation.Location = new System.Drawing.Point(7, 87);
+            this.label_zRotation.Name = "label_zRotation";
+            this.label_zRotation.Size = new System.Drawing.Size(14, 13);
+            this.label_zRotation.TabIndex = 0;
+            this.label_zRotation.Text = "Z";
+            // 
+            // label_yRotation
+            // 
+            this.label_yRotation.AutoSize = true;
+            this.label_yRotation.Location = new System.Drawing.Point(7, 69);
+            this.label_yRotation.Name = "label_yRotation";
+            this.label_yRotation.Size = new System.Drawing.Size(14, 13);
+            this.label_yRotation.TabIndex = 0;
+            this.label_yRotation.Text = "Y";
+            // 
+            // label_maxZRotationValue
+            // 
+            this.label_maxZRotationValue.AutoSize = true;
+            this.label_maxZRotationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maxZRotationValue.Location = new System.Drawing.Point(89, 87);
+            this.label_maxZRotationValue.Name = "label_maxZRotationValue";
+            this.label_maxZRotationValue.Size = new System.Drawing.Size(14, 13);
+            this.label_maxZRotationValue.TabIndex = 0;
+            this.label_maxZRotationValue.Text = "0";
+            // 
+            // label_currentZRotationValue
+            // 
+            this.label_currentZRotationValue.AutoSize = true;
+            this.label_currentZRotationValue.Location = new System.Drawing.Point(186, 87);
+            this.label_currentZRotationValue.Name = "label_currentZRotationValue";
+            this.label_currentZRotationValue.Size = new System.Drawing.Size(13, 13);
+            this.label_currentZRotationValue.TabIndex = 0;
+            this.label_currentZRotationValue.Text = "0";
+            // 
+            // label_maxYRotationValue
+            // 
+            this.label_maxYRotationValue.AutoSize = true;
+            this.label_maxYRotationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maxYRotationValue.Location = new System.Drawing.Point(89, 69);
+            this.label_maxYRotationValue.Name = "label_maxYRotationValue";
+            this.label_maxYRotationValue.Size = new System.Drawing.Size(14, 13);
+            this.label_maxYRotationValue.TabIndex = 0;
+            this.label_maxYRotationValue.Text = "0";
+            // 
+            // label_currentYRotationValue
+            // 
+            this.label_currentYRotationValue.AutoSize = true;
+            this.label_currentYRotationValue.Location = new System.Drawing.Point(186, 69);
+            this.label_currentYRotationValue.Name = "label_currentYRotationValue";
+            this.label_currentYRotationValue.Size = new System.Drawing.Size(13, 13);
+            this.label_currentYRotationValue.TabIndex = 0;
+            this.label_currentYRotationValue.Text = "0";
+            // 
+            // label_maxXRotationValue
+            // 
+            this.label_maxXRotationValue.AutoSize = true;
+            this.label_maxXRotationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maxXRotationValue.Location = new System.Drawing.Point(89, 51);
+            this.label_maxXRotationValue.Name = "label_maxXRotationValue";
+            this.label_maxXRotationValue.Size = new System.Drawing.Size(14, 13);
+            this.label_maxXRotationValue.TabIndex = 0;
+            this.label_maxXRotationValue.Text = "0";
+            // 
+            // label_currentXRotationValue
+            // 
+            this.label_currentXRotationValue.AutoSize = true;
+            this.label_currentXRotationValue.Location = new System.Drawing.Point(186, 51);
+            this.label_currentXRotationValue.Name = "label_currentXRotationValue";
+            this.label_currentXRotationValue.Size = new System.Drawing.Size(13, 13);
+            this.label_currentXRotationValue.TabIndex = 0;
+            this.label_currentXRotationValue.Text = "0";
+            // 
+            // label_xRotation
+            // 
+            this.label_xRotation.AutoSize = true;
+            this.label_xRotation.Location = new System.Drawing.Point(7, 51);
+            this.label_xRotation.Name = "label_xRotation";
+            this.label_xRotation.Size = new System.Drawing.Size(14, 13);
+            this.label_xRotation.TabIndex = 0;
+            this.label_xRotation.Text = "X";
             // 
             // groupBox_acceleration
             // 
             this.groupBox_acceleration.Controls.Add(this.label_maxAcceleration);
             this.groupBox_acceleration.Controls.Add(this.label_currentAcceleration);
-            this.groupBox_acceleration.Controls.Add(this.label_z);
-            this.groupBox_acceleration.Controls.Add(this.label_y);
-            this.groupBox_acceleration.Controls.Add(this.label_maxZValue);
-            this.groupBox_acceleration.Controls.Add(this.label_currentZValue);
-            this.groupBox_acceleration.Controls.Add(this.label_maxYValue);
-            this.groupBox_acceleration.Controls.Add(this.label_currentYValue);
-            this.groupBox_acceleration.Controls.Add(this.label_maxXValue);
-            this.groupBox_acceleration.Controls.Add(this.label_currentXValue);
-            this.groupBox_acceleration.Controls.Add(this.label_x);
+            this.groupBox_acceleration.Controls.Add(this.label_zAcceleration);
+            this.groupBox_acceleration.Controls.Add(this.label_yAcceleration);
+            this.groupBox_acceleration.Controls.Add(this.label_maxZAccelerationValue);
+            this.groupBox_acceleration.Controls.Add(this.label_currentZAccelerationValue);
+            this.groupBox_acceleration.Controls.Add(this.label_maxYAccelerationValue);
+            this.groupBox_acceleration.Controls.Add(this.label_currentYAccelerationValue);
+            this.groupBox_acceleration.Controls.Add(this.label_maxXAccelerationValue);
+            this.groupBox_acceleration.Controls.Add(this.label_currentXAccelerationValue);
+            this.groupBox_acceleration.Controls.Add(this.label_xAceleration);
             this.groupBox_acceleration.Location = new System.Drawing.Point(30, 30);
             this.groupBox_acceleration.Name = "groupBox_acceleration";
-            this.groupBox_acceleration.Size = new System.Drawing.Size(200, 245);
+            this.groupBox_acceleration.Size = new System.Drawing.Size(266, 111);
             this.groupBox_acceleration.TabIndex = 0;
             this.groupBox_acceleration.TabStop = false;
             this.groupBox_acceleration.Text = "ACCELERATION";
@@ -1750,7 +1893,7 @@
             // label_maxAcceleration
             // 
             this.label_maxAcceleration.AutoSize = true;
-            this.label_maxAcceleration.Location = new System.Drawing.Point(153, 26);
+            this.label_maxAcceleration.Location = new System.Drawing.Point(89, 26);
             this.label_maxAcceleration.Name = "label_maxAcceleration";
             this.label_maxAcceleration.Size = new System.Drawing.Size(27, 13);
             this.label_maxAcceleration.TabIndex = 0;
@@ -1759,92 +1902,127 @@
             // label_currentAcceleration
             // 
             this.label_currentAcceleration.AutoSize = true;
-            this.label_currentAcceleration.Location = new System.Drawing.Point(89, 26);
+            this.label_currentAcceleration.Location = new System.Drawing.Point(186, 26);
             this.label_currentAcceleration.Name = "label_currentAcceleration";
             this.label_currentAcceleration.Size = new System.Drawing.Size(41, 13);
             this.label_currentAcceleration.TabIndex = 0;
             this.label_currentAcceleration.Text = "Current";
             // 
-            // label_z
+            // label_zAcceleration
             // 
-            this.label_z.AutoSize = true;
-            this.label_z.Location = new System.Drawing.Point(7, 87);
-            this.label_z.Name = "label_z";
-            this.label_z.Size = new System.Drawing.Size(14, 13);
-            this.label_z.TabIndex = 0;
-            this.label_z.Text = "Z";
+            this.label_zAcceleration.AutoSize = true;
+            this.label_zAcceleration.Location = new System.Drawing.Point(7, 87);
+            this.label_zAcceleration.Name = "label_zAcceleration";
+            this.label_zAcceleration.Size = new System.Drawing.Size(14, 13);
+            this.label_zAcceleration.TabIndex = 0;
+            this.label_zAcceleration.Text = "Z";
             // 
-            // label_y
+            // label_yAcceleration
             // 
-            this.label_y.AutoSize = true;
-            this.label_y.Location = new System.Drawing.Point(7, 69);
-            this.label_y.Name = "label_y";
-            this.label_y.Size = new System.Drawing.Size(14, 13);
-            this.label_y.TabIndex = 0;
-            this.label_y.Text = "Y";
+            this.label_yAcceleration.AutoSize = true;
+            this.label_yAcceleration.Location = new System.Drawing.Point(7, 69);
+            this.label_yAcceleration.Name = "label_yAcceleration";
+            this.label_yAcceleration.Size = new System.Drawing.Size(14, 13);
+            this.label_yAcceleration.TabIndex = 0;
+            this.label_yAcceleration.Text = "Y";
             // 
-            // label_maxZValue
+            // label_maxZAccelerationValue
             // 
-            this.label_maxZValue.AutoSize = true;
-            this.label_maxZValue.Location = new System.Drawing.Point(153, 87);
-            this.label_maxZValue.Name = "label_maxZValue";
-            this.label_maxZValue.Size = new System.Drawing.Size(13, 13);
-            this.label_maxZValue.TabIndex = 0;
-            this.label_maxZValue.Text = "0";
+            this.label_maxZAccelerationValue.AutoSize = true;
+            this.label_maxZAccelerationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maxZAccelerationValue.Location = new System.Drawing.Point(89, 87);
+            this.label_maxZAccelerationValue.Name = "label_maxZAccelerationValue";
+            this.label_maxZAccelerationValue.Size = new System.Drawing.Size(14, 13);
+            this.label_maxZAccelerationValue.TabIndex = 0;
+            this.label_maxZAccelerationValue.Text = "0";
             // 
-            // label_currentZValue
+            // label_currentZAccelerationValue
             // 
-            this.label_currentZValue.AutoSize = true;
-            this.label_currentZValue.Location = new System.Drawing.Point(89, 87);
-            this.label_currentZValue.Name = "label_currentZValue";
-            this.label_currentZValue.Size = new System.Drawing.Size(13, 13);
-            this.label_currentZValue.TabIndex = 0;
-            this.label_currentZValue.Text = "0";
+            this.label_currentZAccelerationValue.AutoSize = true;
+            this.label_currentZAccelerationValue.Location = new System.Drawing.Point(186, 87);
+            this.label_currentZAccelerationValue.Name = "label_currentZAccelerationValue";
+            this.label_currentZAccelerationValue.Size = new System.Drawing.Size(13, 13);
+            this.label_currentZAccelerationValue.TabIndex = 0;
+            this.label_currentZAccelerationValue.Text = "0";
             // 
-            // label_maxYValue
+            // label_maxYAccelerationValue
             // 
-            this.label_maxYValue.AutoSize = true;
-            this.label_maxYValue.Location = new System.Drawing.Point(153, 69);
-            this.label_maxYValue.Name = "label_maxYValue";
-            this.label_maxYValue.Size = new System.Drawing.Size(13, 13);
-            this.label_maxYValue.TabIndex = 0;
-            this.label_maxYValue.Text = "0";
+            this.label_maxYAccelerationValue.AutoSize = true;
+            this.label_maxYAccelerationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maxYAccelerationValue.Location = new System.Drawing.Point(89, 69);
+            this.label_maxYAccelerationValue.Name = "label_maxYAccelerationValue";
+            this.label_maxYAccelerationValue.Size = new System.Drawing.Size(14, 13);
+            this.label_maxYAccelerationValue.TabIndex = 0;
+            this.label_maxYAccelerationValue.Text = "0";
             // 
-            // label_currentYValue
+            // label_currentYAccelerationValue
             // 
-            this.label_currentYValue.AutoSize = true;
-            this.label_currentYValue.Location = new System.Drawing.Point(89, 69);
-            this.label_currentYValue.Name = "label_currentYValue";
-            this.label_currentYValue.Size = new System.Drawing.Size(13, 13);
-            this.label_currentYValue.TabIndex = 0;
-            this.label_currentYValue.Text = "0";
+            this.label_currentYAccelerationValue.AutoSize = true;
+            this.label_currentYAccelerationValue.Location = new System.Drawing.Point(186, 69);
+            this.label_currentYAccelerationValue.Name = "label_currentYAccelerationValue";
+            this.label_currentYAccelerationValue.Size = new System.Drawing.Size(13, 13);
+            this.label_currentYAccelerationValue.TabIndex = 0;
+            this.label_currentYAccelerationValue.Text = "0";
             // 
-            // label_maxXValue
+            // label_maxXAccelerationValue
             // 
-            this.label_maxXValue.AutoSize = true;
-            this.label_maxXValue.Location = new System.Drawing.Point(153, 51);
-            this.label_maxXValue.Name = "label_maxXValue";
-            this.label_maxXValue.Size = new System.Drawing.Size(13, 13);
-            this.label_maxXValue.TabIndex = 0;
-            this.label_maxXValue.Text = "0";
+            this.label_maxXAccelerationValue.AutoSize = true;
+            this.label_maxXAccelerationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maxXAccelerationValue.Location = new System.Drawing.Point(89, 51);
+            this.label_maxXAccelerationValue.Name = "label_maxXAccelerationValue";
+            this.label_maxXAccelerationValue.Size = new System.Drawing.Size(14, 13);
+            this.label_maxXAccelerationValue.TabIndex = 0;
+            this.label_maxXAccelerationValue.Text = "0";
             // 
-            // label_currentXValue
+            // label_currentXAccelerationValue
             // 
-            this.label_currentXValue.AutoSize = true;
-            this.label_currentXValue.Location = new System.Drawing.Point(89, 51);
-            this.label_currentXValue.Name = "label_currentXValue";
-            this.label_currentXValue.Size = new System.Drawing.Size(13, 13);
-            this.label_currentXValue.TabIndex = 0;
-            this.label_currentXValue.Text = "0";
+            this.label_currentXAccelerationValue.AutoSize = true;
+            this.label_currentXAccelerationValue.Location = new System.Drawing.Point(186, 51);
+            this.label_currentXAccelerationValue.Name = "label_currentXAccelerationValue";
+            this.label_currentXAccelerationValue.Size = new System.Drawing.Size(13, 13);
+            this.label_currentXAccelerationValue.TabIndex = 0;
+            this.label_currentXAccelerationValue.Text = "0";
             // 
-            // label_x
+            // label_xAceleration
             // 
-            this.label_x.AutoSize = true;
-            this.label_x.Location = new System.Drawing.Point(7, 51);
-            this.label_x.Name = "label_x";
-            this.label_x.Size = new System.Drawing.Size(14, 13);
-            this.label_x.TabIndex = 0;
-            this.label_x.Text = "X";
+            this.label_xAceleration.AutoSize = true;
+            this.label_xAceleration.Location = new System.Drawing.Point(7, 51);
+            this.label_xAceleration.Name = "label_xAceleration";
+            this.label_xAceleration.Size = new System.Drawing.Size(14, 13);
+            this.label_xAceleration.TabIndex = 0;
+            this.label_xAceleration.Text = "X";
+            // 
+            // progressBar_battery
+            // 
+            this.progressBar_battery.Location = new System.Drawing.Point(347, 304);
+            this.progressBar_battery.Name = "progressBar_battery";
+            this.progressBar_battery.Size = new System.Drawing.Size(471, 10);
+            this.progressBar_battery.TabIndex = 2;
+            // 
+            // progressBar_temperature
+            // 
+            this.progressBar_temperature.Location = new System.Drawing.Point(347, 329);
+            this.progressBar_temperature.Name = "progressBar_temperature";
+            this.progressBar_temperature.Size = new System.Drawing.Size(471, 10);
+            this.progressBar_temperature.TabIndex = 2;
+            // 
+            // label_temerature
+            // 
+            this.label_temerature.AutoSize = true;
+            this.label_temerature.Location = new System.Drawing.Point(291, 325);
+            this.label_temerature.Name = "label_temerature";
+            this.label_temerature.Size = new System.Drawing.Size(34, 13);
+            this.label_temerature.TabIndex = 3;
+            this.label_temerature.Text = "Temp";
+            // 
+            // label_battery
+            // 
+            this.label_battery.AutoSize = true;
+            this.label_battery.Location = new System.Drawing.Point(291, 304);
+            this.label_battery.Name = "label_battery";
+            this.label_battery.Size = new System.Drawing.Size(40, 13);
+            this.label_battery.TabIndex = 3;
+            this.label_battery.Text = "Battery";
             // 
             // Form_main
             // 
@@ -1906,6 +2084,9 @@
             this.tabPage_about.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_logo)).EndInit();
             this.tabPage_dashBoard.ResumeLayout(false);
+            this.tabPage_dashBoard.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox_acceleration.ResumeLayout(false);
             this.groupBox_acceleration.PerformLayout();
             this.ResumeLayout(false);
@@ -2918,15 +3099,31 @@
         private System.Windows.Forms.GroupBox groupBox_acceleration;
         private System.Windows.Forms.Label label_maxAcceleration;
         private System.Windows.Forms.Label label_currentAcceleration;
-        private System.Windows.Forms.Label label_z;
-        private System.Windows.Forms.Label label_y;
-        private System.Windows.Forms.Label label_maxZValue;
-        private System.Windows.Forms.Label label_currentZValue;
-        private System.Windows.Forms.Label label_maxYValue;
-        private System.Windows.Forms.Label label_currentYValue;
-        private System.Windows.Forms.Label label_maxXValue;
-        private System.Windows.Forms.Label label_currentXValue;
-        private System.Windows.Forms.Label label_x;
+        private System.Windows.Forms.Label label_zAcceleration;
+        private System.Windows.Forms.Label label_yAcceleration;
+        private System.Windows.Forms.Label label_maxZAccelerationValue;
+        private System.Windows.Forms.Label label_currentZAccelerationValue;
+        private System.Windows.Forms.Label label_maxYAccelerationValue;
+        private System.Windows.Forms.Label label_currentYAccelerationValue;
+        private System.Windows.Forms.Label label_maxXAccelerationValue;
+        private System.Windows.Forms.Label label_currentXAccelerationValue;
+        private System.Windows.Forms.Label label_xAceleration;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label_maxRotation;
+        private System.Windows.Forms.Label label_currentRotation;
+        private System.Windows.Forms.Label label_zRotation;
+        private System.Windows.Forms.Label label_yRotation;
+        private System.Windows.Forms.Label label_maxZRotationValue;
+        private System.Windows.Forms.Label label_currentZRotationValue;
+        private System.Windows.Forms.Label label_maxYRotationValue;
+        private System.Windows.Forms.Label label_currentYRotationValue;
+        private System.Windows.Forms.Label label_maxXRotationValue;
+        private System.Windows.Forms.Label label_currentXRotationValue;
+        private System.Windows.Forms.Label label_xRotation;
+        private System.Windows.Forms.Label label_battery;
+        private System.Windows.Forms.Label label_temerature;
+        private System.Windows.Forms.ProgressBar progressBar_temperature;
+        private System.Windows.Forms.ProgressBar progressBar_battery;
 
     }
 }

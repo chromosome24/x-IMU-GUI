@@ -88,13 +88,19 @@ namespace x_IMU_GUI
         /// Delegate used for cross thread invokation of Form Dashboard controls
         /// </summary>
         /// <param name="data"></param>
-        delegate void updateDashboardDelagate (x_IMU_API.CalInertialAndMagneticData data);
+        delegate void updateDashboardDelagate ();
         /// <summary>
         /// updateDashboardDelegate declaration
         /// </summary>
         private updateDashboardDelagate updateDashboard;
 
-        private float maxX, maxY, maxZ;
+        private float maxXAcceleration, maxYAcceleration, maxZAcceleration,
+            maxXRotation, maxYRotation, maxZRotation;
+
+        private float currentXAcceleration, currentYAcceleration, currentZAcceleration,
+            currentXRotation, currentYRotation, currentZRotation;
+
+        private float batteryVoltage, Temperature;
         #endregion
 
         /// <summary>
@@ -209,11 +215,23 @@ namespace x_IMU_GUI
 
             //Add method delagate called during to Dashboard control invoke
             this.updateDashboard += updateDashboard_rawInertialAndMagnaetic;
+            this.updateDashboard += updatDashboard_calBatteryAndThermal;
             
             //assign other variables
-            this.maxX = 0;
-            this.maxY = 0;
-            this.maxZ = 0;
+            this.maxXAcceleration = 0;
+            this.maxYAcceleration = 0;
+            this.maxZAcceleration = 0;
+            this.maxXRotation = 0;
+            this.maxYRotation = 0;
+            this.maxZRotation = 0;
+            this.currentXAcceleration = 0;
+            this.currentYAcceleration = 0;
+            this.currentZAcceleration = 0;
+            this.currentXRotation = 0;
+            this.currentYRotation = 0;
+            this.currentZRotation = 0;
+            this.batteryVoltage = 100;
+            this.Temperature = 0;
 
             // Auto connect on start up
             toggleButton_openClosePort.PerformClick();
@@ -269,6 +287,9 @@ namespace x_IMU_GUI
             {
                 registerTreeView.Refresh();
             }
+
+            //update Dashboard Indicators
+            if (this.toggleButton_dashboardCapture.ToggleState) this.updateDashboard();
         }
 
         #endregion
@@ -765,6 +786,11 @@ namespace x_IMU_GUI
             thermometerOscilloscope.Caption = "Calibrated Thermometer Data (˚C)";
             batteryOscilloscope.AddScopeData(e.BatteryVoltage, 0.0f, 0.0f);
             thermometerOscilloscope.AddScopeData(e.Thermometer, 0.0f, 0.0f);
+
+            //update thermo and battery datat
+            this.batteryVoltage = e.BatteryVoltage;
+            this.Temperature = e.Thermometer;
+            //if (this.toggleButton_dashboardCapture.ToggleState) this.Invoke(updateDashboard);
         }
 
         /// <summary>
@@ -791,7 +817,24 @@ namespace x_IMU_GUI
             gyroscopeOscilloscope.AddScopeData(e.Gyroscope[0], e.Gyroscope[1], e.Gyroscope[2]);
             accelerometerOscilloscope.AddScopeData(e.Accelerometer[0], e.Accelerometer[1], e.Accelerometer[2]);
             magnetometerOscilloscope.AddScopeData(e.Magnetometer[0], e.Magnetometer[1], e.Magnetometer[2]);
-            if (this.toggleButton_dashboardCapture.ToggleState) this.Invoke(updateDashboard, e);
+
+            //update acceleration variables
+            this.currentXAcceleration = e.Accelerometer[0];
+            this.currentYAcceleration = e.Accelerometer[1];
+            this.currentZAcceleration = e.Accelerometer[2];
+            if (Math.Abs(e.Accelerometer[0]) > Math.Abs(this.maxXAcceleration)) this.maxXAcceleration = e.Accelerometer[0];
+            if (Math.Abs(e.Accelerometer[1]) > Math.Abs(this.maxYAcceleration)) this.maxYAcceleration = e.Accelerometer[1];
+            if (Math.Abs(e.Accelerometer[2]) > Math.Abs(this.maxZAcceleration)) this.maxZAcceleration = e.Accelerometer[2];
+
+            //update rotation variables
+            this.currentXRotation = e.Gyroscope[0];
+            this.currentYRotation = e.Gyroscope[1];
+            this.currentZRotation = e.Gyroscope[2];
+            if (Math.Abs(e.Gyroscope[0]) > Math.Abs(this.maxXRotation)) this.maxXRotation = e.Gyroscope[0];
+            if (Math.Abs(e.Gyroscope[1]) > Math.Abs(this.maxYRotation)) this.maxYRotation = e.Gyroscope[1];
+            if (Math.Abs(e.Gyroscope[2]) > Math.Abs(this.maxZRotation)) this.maxZRotation = e.Gyroscope[2];
+
+            //if (this.toggleButton_dashboardCapture.ToggleState) this.Invoke(updateDashboard);
         }
 
         /// <summary>
@@ -1416,32 +1459,64 @@ namespace x_IMU_GUI
                 this.toggleButton_dashboardCapture.ForeColor = Color.Black;
             }
         }
-        
-        public void updateDashboard_rawInertialAndMagnaetic(x_IMU_API.CalInertialAndMagneticData data)
-        {
-            this.label_currentXValue.Text = data.Accelerometer[0].ToString();
-            this.label_currentYValue.Text = data.Accelerometer[1].ToString();
-            this.label_currentZValue.Text = data.Accelerometer[2].ToString();
 
-            if (data.Accelerometer[0] > this.maxX)
+        public void updateDashboard_rawInertialAndMagnaetic()
+        {
+            //Update rotation data
+            this.label_currentXRotationValue.Text = this.currentXRotation.ToString();
+            this.label_currentYRotationValue.Text = this.currentYRotation.ToString();
+            this.label_currentZRotationValue.Text = this.currentZRotation.ToString();
+            this.label_maxXRotationValue.Text = this.maxXRotation.ToString();
+            this.label_maxYRotationValue.Text = this.maxYRotation.ToString();
+            this.label_maxZRotationValue.Text = this.maxZRotation.ToString();
+            /*if (Math.Abs(data.Gyroscope[0]) > Math.Abs(this.maxXRotation))
             {
-                this.maxX = data.Accelerometer[0];
-                this.label_maxXValue.Text = this.maxX.ToString();
+                this.maxXRotation = data.Gyroscope[0];
+                this.label_maxXRotationValue.Text = this.maxXRotation.ToString();
             }
-            if (data.Accelerometer[1] > this.maxY)
+            if (Math.Abs(data.Gyroscope[1]) > Math.Abs(this.maxYRotation))
             {
-                this.maxY = data.Accelerometer[1];
-                this.label_maxYValue.Text = this.maxY.ToString();
+                this.maxYRotation = data.Gyroscope[1];
+                this.label_maxYRotationValue.Text = this.maxYRotation.ToString();
             }
-            if (data.Accelerometer[2] > this.maxZ)
+            if (Math.Abs(data.Gyroscope[2]) > Math.Abs(this.maxZRotation))
             {
-                this.maxZ = data.Accelerometer[2];
-                this.label_maxZValue.Text = this.maxZ.ToString();
+                this.maxZRotation = data.Gyroscope[2];
+                this.label_maxZRotationValue.Text = this.maxZRotation.ToString();
+            }*/
+
+            //Update acceleration data
+            this.label_currentXAccelerationValue.Text = this.currentXAcceleration.ToString();
+            this.label_currentYAccelerationValue.Text = this.currentYAcceleration.ToString();
+            this.label_currentZAccelerationValue.Text = this.currentZAcceleration.ToString();
+            this.label_maxXAccelerationValue.Text = this.maxXAcceleration.ToString();
+            this.label_maxYAccelerationValue.Text = this.maxYAcceleration.ToString();
+            this.label_maxZAccelerationValue.Text = this.maxZAcceleration.ToString();
+            /*if (Math.Abs(data.Accelerometer[0]) > Math.Abs(this.maxXAcceleration))
+            {
+                this.maxXAcceleration = data.Accelerometer[0];
+                this.label_maxXAccelerationValue.Text = this.maxXAcceleration.ToString();
             }
+            if (Math.Abs(data.Accelerometer[1]) > Math.Abs(this.maxYAcceleration))
+            {
+                this.maxYAcceleration = data.Accelerometer[1];
+                this.label_maxYAccelerationValue.Text = this.maxYAcceleration.ToString();
+            }
+            if (Math.Abs(data.Accelerometer[2]) > Math.Abs(this.maxZAcceleration))
+            {
+                this.maxZAcceleration = data.Accelerometer[2];
+                this.label_maxZAccelerationValue.Text = this.maxZAcceleration.ToString();
+            }*/
         }
 
-        private void updatDashboard_rawBatteryAndThermal(x_IMU_API.RawBatteryAndThermometerData data)
+        public void updatDashboard_calBatteryAndThermal()
         {
+            int batterypercent = (int)((this.batteryVoltage / 5) * 100);
+            int temperaturepercent = (int)(this.Temperature);
+            if (batterypercent > 100) batterypercent = 100;
+            if (temperaturepercent > 100) temperaturepercent = 100;
+            this.progressBar_battery.Value = batterypercent;
+            this.progressBar_temperature.Value = temperaturepercent;
         }
 
         #endregion
